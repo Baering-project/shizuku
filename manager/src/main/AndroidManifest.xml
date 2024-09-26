@@ -2,39 +2,63 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 애플리케이션에서 필요한 권한을 정의 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 부팅 완료 시 앱이 알림을 받을 수 있는 권한 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />     <!-- 포그라운드 서비스 실행을 위한 권한 -->
+    <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />    <!-- 앱 자체 정의한 MANAGER 권한 -->
+    <uses-permission android:name="android.permission.INTERNET" />               <!-- 인터넷 접근을 위한 권한 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />     <!-- 알림을 게시하기 위한 권한 -->
     <uses-permission
         android:name="moe.shizuku.manager.permission.API_V23"
-        tools:node="remove" />
+        tools:node="remove" /> <!-- API_V23 권한은 사용하지 않음 (tools:node="remove"로 삭제됨) -->
 
+    <!-- 앱이 필요로 하는 기능을 정의 -->
     <uses-feature
         android:name="android.software.leanback"
-        android:required="false" />
+        android:required="false" /> <!-- TV용 leanback 소프트웨어 기능이 선택 사항임 -->
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false" />
+        android:required="false" /> <!-- 터치스크린을 요구하지 않음 -->
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
         android:description="@string/permission_group_description"
         android:icon="@drawable/ic_system_icon"
-        android:label="@string/permission_group_label" />
+        android:label="@string/permission_group_label" /> <!-- API 관련 권한 그룹 정의 -->
 
+    <!-- MANAGER 권한 정의 (앱의 서명으로 보호됨) -->
     <permission
         android:name="moe.shizuku.manager.permission.MANAGER"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature" /> <!-- 앱 서명으로 보호되는 권한 -->
+    <!-- API_V23 권한 정의 (위험 권한으로 보호됨) -->
     <permission
         android:name="moe.shizuku.manager.permission.API_V23"
         android:description="@string/permission_description"
         android:icon="@drawable/ic_system_icon"
         android:label="@string/permission_label"
         android:permissionGroup="moe.shizuku.manager.permission-group.API"
-        android:protectionLevel="dangerous" />
+        android:protectionLevel="dangerous" /> <!-- 위험한 권한으로 정의됨 -->
 
+
+<!--
+
+        android:name=".ShizukuApplication"                         앱의 Application 클래스를 지정
+        android:allowBackup="true"                                 백업 허용
+        android:autoRevokePermissions="allowed"                    사용하지 않는 권한은 자동으로 회수
+        android:banner="@drawable/ic_launcher"                     앱의 배너 아이콘
+        android:dataExtractionRules="@xml/data_extraction_rules"   데이터 추출 규칙
+        android:directBootAware="true"                             기기가 부팅되는 동안도 동작 가능
+        android:enableOnBackInvokedCallback="true"                 뒤로 가기 동작을 활성화
+        android:fullBackupContent="@xml/backup_descriptor"         전체 백업에 대한 설명 파일
+        android:icon="@drawable/ic_launcher"                       앱의 아이콘
+        android:label="@string/app_name"                           앱의 이름
+        android:localeConfig="@xml/locales_config"                 지역 설정 파일
+        android:supportsRtl="true"                                 오른쪽에서 왼쪽으로 읽는 텍스트 방향 지원
+        android:theme="@style/AppTheme"                            앱의 기본 테마
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="33">                                      타겟 API 레벨이 33 (Android 13)
+-->
+    <!-- 애플리케이션 자체를 정의하는 application 태그  (위에 주석은 각 속성의 대한 설명)-->
     <application
         android:name=".ShizukuApplication"
         android:allowBackup="true"
@@ -52,6 +76,14 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="33">
 
+
+        <!--
+        android:banner="@mipmap/banner"                               배너 이미지
+        android:exported="true">                                      외부에서 접근 가능
+        <action android:name="android.intent.action.MAIN" />          앱의 메인 액티비티로 설정
+        <category android:name="android.intent.category.LAUNCHER" />  런처에서 실행 가능
+        -->
+        <!-- MainActivity 정의: 앱의 메인 화면을 담당. (위 주석은 속성설명) -->
         <activity
             android:name=".MainActivity"
             android:banner="@mipmap/banner"
@@ -66,15 +98,27 @@
                 <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
             </intent-filter>
         </activity>
+
+        <!-- ApplicationManagementActivity: 앱 관리 화면을 담당 -->
         <activity
             android:name=".management.ApplicationManagementActivity"
             android:label="@string/home_app_management_title" />
+
+        <!-- AdbPairingTutorialActivity: ADB 페어링 튜토리얼 화면 -->
         <activity
             android:name=".adb.AdbPairingTutorialActivity"
             android:label="@string/adb_pairing" />
+
+        <!-- ShellTutorialActivity: 쉘 관련 튜토리얼 화면 -->
         <activity
             android:name=".shell.ShellTutorialActivity"
             android:label="@string/home_terminal_title" />
+
+
+        <!--
+        <action android:name="android.intent.action.APPLICATION_PREFERENCES" />   애플리케이션 설정과 연결
+        -->
+        <!-- SettingsActivity: 설정 화면 . (위 주석은 속성설명) -->
         <activity
             android:name=".settings.SettingsActivity"
             android:exported="false"
@@ -83,9 +127,13 @@
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+
+        <!-- StarterActivity: 앱 시작을 담당하는 화면 -->
         <activity
             android:name=".starter.StarterActivity"
             android:label="@string/starter" />
+
+        <!-- RequestPermissionActivity: 권한 요청을 위한 액티비티 -->
         <activity
             android:name=".authorization.RequestPermissionActivity"
             android:directBootAware="true"
@@ -99,6 +147,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- ShellRequestHandlerActivity: 쉘 요청을 처리하는 액티비티 -->
         <activity
             android:name=".legacy.ShellRequestHandlerActivity"
             android:directBootAware="true"
@@ -111,6 +161,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- LegacyIsNotSupportedActivity: 구버전 지원 불가 메시지 표시 -->
         <activity
             android:name=".legacy.LegacyIsNotSupportedActivity"
             android:excludeFromRecents="true"
@@ -124,12 +176,14 @@
             </intent-filter>
         </activity>
 
+        <!-- ADB 페어링 서비스: 기기 연결을 관리하는 서비스 -->
         <service
             android:name=".adb.AdbPairingService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="connectedDevice" />
 
+        <!-- BootCompleteReceiver: 기기 부팅 완료 시 실행되는 리시버 -->
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:directBootAware="true"
@@ -143,6 +197,7 @@
             </intent-filter>
         </receiver>
 
+        <!-- ShizukuReceiver: Shizuku 관련 요청 처리 리시버 -->
         <receiver
             android:name=".receiver.ShizukuReceiver"
             android:directBootAware="true"
@@ -154,6 +209,7 @@
             </intent-filter>
         </receiver>
 
+        <!-- ShizukuManagerProvider: 앱 데이터를 제공하는 Content Provider -->
         <provider
             android:name=".ShizukuManagerProvider"
             android:authorities="${applicationId}.shizuku"
