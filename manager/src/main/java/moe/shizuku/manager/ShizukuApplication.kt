@@ -14,7 +14,7 @@ lateinit var application: ShizukuApplication
 
 class ShizukuApplication : Application() {
 
-    companion object {
+    companion object {//ㅇㅇ
 
         init {
             logd("ShizukuApplication", "init")
