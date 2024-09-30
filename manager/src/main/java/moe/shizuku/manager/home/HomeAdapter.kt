@@ -53,8 +53,8 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
 
         // ADB 권한이 있을 때 앱 관리와 터미널 항목 추가
         if (adbPermission) {
-            addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, ID_APPS)  // 앱 관리 - 0개 앱 인증됨 화면 추가
-            addItem(TerminalViewHolder.CREATOR, status, ID_TERMINAL)                      // 터미널 실행 - 터미널에서 Shizuku 사용 화면 추가
+//            addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, ID_APPS)  // 앱 관리 - 0개 앱 인증됨 화면 추가
+//            addItem(TerminalViewHolder.CREATOR, status, ID_TERMINAL)                      // 터미널 실행 - 터미널에서 Shizuku 사용 화면 추가
         }
 
         // 서버가 실행 중이고 ADB 권한이 없을 때 경고 항목 추가
@@ -69,7 +69,7 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
 
             // 루팅된 기기일 경우 루트 시작 항목 추가
             if (root) {
-                addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)       //시작(루팅된 기기용) 화면 추가
+//                addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)       //시작(루팅된 기기용) 화면 추가
             }
 
             // Android 11(R) 이상이거나 ADB TCP 포트가 열려 있을 경우 무선 ADB 항목 추가
@@ -79,15 +79,15 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
 
 
             // ADB 시작 항목 추가
-            addItem(StartAdbViewHolder.CREATOR, null, ID_START_ADB)              //컴퓨터에 연결하여 시작 화면추가
+//            addItem(StartAdbViewHolder.CREATOR, null, ID_START_ADB)              //컴퓨터에 연결하여 시작 화면추가
 
             // 루팅되지 않은 경우에도 루트 시작 항목 추가
             if (!root) {
-                addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)       //시작(루팅된 기기용) 화면 추가
+//                addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)       //시작(루팅된 기기용) 화면 추가
             }
         }
         // 추가 정보 항목 추가
-        addItem(LearnMoreViewHolder.CREATOR, null, ID_LEARN_MORE)                //Shizuku 알아보기 화면 추가
+//        addItem(LearnMoreViewHolder.CREATOR, null, ID_LEARN_MORE)                //Shizuku 알아보기 화면 추가
         // 데이터가 변경되었음을 RecyclerView에 알림
         notifyDataSetChanged()
     }
