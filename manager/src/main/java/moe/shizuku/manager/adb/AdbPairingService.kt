@@ -63,19 +63,29 @@ class AdbPairingService : Service() { // Android의 백그라운드에서 실행
         }
     }
 
-    // 메인 스레드에서 실행되는 핸들러 생성
+    // 메인 스레드에서 실행되는 핸들러 생성 - 이 핸들러는 메인(UI) 스레드에서 동작하게 설정되어 있어, UI와 관련된 작업을 안전하게 처리할 수 있습니다.
     private val handler = Handler(Looper.getMainLooper())
+    // Android의 LiveData 중 하나로, 데이터가 변경되면 이를 관찰하는 Observer들에게 자동으로 알림을 주는 역할을 함-
     private val port = MutableLiveData<Int>() // ADB 페어링에 사용될 포트를 저장
+
+    //adbMdns**는 ADB mDNS(Multicast DNS) 검색 객체로, ADB 장치들이 연결을 위해 사용할 수 있는 네트워크 서비스를 검색하는 데 사용
     private var adbMdns: AdbMdns? = null      // ADB mDNS 검색 객체
 
     // 포트가 변경될 때 호출되는 옵저버
+    /*
+    * Observer**는 LiveData를 구독하여 포트 번호가 변경될 때 호출됩니다.
+    * 즉, port라는 MutableLiveData가 변할 때마다 이 Observer가 알림을 받고 포트 변경을 처리합니다.
+    */
     private val observer = Observer<Int> { port ->
-        Log.i(tag, "Pairing service port: $port")
+        Log.i(tag, "Pairing service port: $port") //포트가 변경되면 로그로 포트 번호를 기록
 
         // Since the service could be killed before user finishing input,
         // we need to put the port into Intent
+
+        // 사용자가 페어링 코드 입력을 완료하기 전에 서비스가 종료될 수 있으므로 페어링 코드 입력을 위한 알림을 생성
         val notification = createInputNotification(port) // 페어링 코드 입력 알림 생성
 
+        //NotificationManager를 통해 해당 알림을 표시
         getSystemService(NotificationManager::class.java).notify(notificationId, notification) // 알림 표시
     }
 
