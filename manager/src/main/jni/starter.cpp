@@ -222,11 +222,11 @@ int starter_main(int argc, char *argv[]) {
         se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
-    printf("info: starter begin\n");
+    printf("info: starter begin 아이앤지로그6\n");
     fflush(stdout);
 
     // kill old server
-    printf("info: killing old process...\n");
+    printf("info: killing old process... 아이앤지로그7\n");
     fflush(stdout);
 
     foreach_proc([](pid_t pid) {
@@ -240,7 +240,7 @@ int starter_main(int argc, char *argv[]) {
             return;
 
         if (kill(pid, SIGKILL) == 0)
-            printf("info: killed %d (%s)\n", pid, name);
+            printf("info: killed %d (%s)아이앤지로그8\n", pid, name);
         else if (errno == EPERM) {
             perrorf("fatal: can't kill %d, please try to stop existing Shizuku from app first.\n", pid);
             exit(EXIT_FATAL_KILL);
@@ -272,13 +272,13 @@ int starter_main(int argc, char *argv[]) {
         exit(EXIT_FATAL_PM_PATH);
     }
 
-    printf("info: apk path is %s\n", apk_path);
+    printf("info: apk path is %s 아이앤지로그10\n", apk_path);
     if (access(apk_path, R_OK) != 0) {
         perrorf("fatal: can't access manager %s\n", apk_path);
         exit(EXIT_FATAL_PM_PATH);
     }
 
-    printf("info: starting server...\n");
+    printf("info: starting server...아이앤지로그11\n");
     fflush(stdout);
     LOGD("start_server");
     start_server(apk_path, SERVER_CLASS_PATH, SERVER_NAME);

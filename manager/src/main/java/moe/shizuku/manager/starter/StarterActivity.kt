@@ -65,13 +65,13 @@ class StarterActivity : AppBarActivity() {
             if (output.endsWith("info: shizuku_starter exit with 0")) {
                 // Shizuku 서비스가 정상적으로 종료되었을 때
                 viewModel.appendOutput("")
-                viewModel.appendOutput("Waiting for service...")
+                viewModel.appendOutput("Waiting for service...아이앤지로그13")
 
                 // Shizuku 서비스가 시작되면 리스너를 통해 처리
                 Shizuku.addBinderReceivedListenerSticky(object : Shizuku.OnBinderReceivedListener {
                     override fun onBinderReceived() {
                         Shizuku.removeBinderReceivedListener(this) // 리스너를 제거
-                        viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds")
+                        viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds 아이앤지로그14")
 
                         window?.decorView?.postDelayed({
                             if (!isFinishing) finish() // 3초 후에 액티비티를 종료
@@ -194,7 +194,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
     // ADB로 Shizuku 서비스를 시작하는 메서드
     private fun startAdb(host: String, port: Int) {
-        sb.append("Starting with wireless adb...").append('\n').append('\n')  // ADB로 시작 중이라는 메시지 추가
+        sb.append("Starting with wireless adb...아이앤지로그1").append('\n').append('\n')  // ADB로 시작 중이라는 메시지 추가
         postResult()
 
         GlobalScope.launch(Dispatchers.IO) {
