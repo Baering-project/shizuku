@@ -151,7 +151,14 @@ dependencies {
     implementation project(':api')
     implementation project(':provider')
 
+    // `annotationProcessor`는 컴파일 시에 애너테이션을 처리하는데 사용되는 라이브러리를 설정합니다.
+    // `libs.refine.annotation.processor`는 특정 애너테이션 처리기 라이브러리를 가리키며, 컴파일 타임에 실행되어
+    // 소스 코드를 생성하거나 수정하는 역할을 합니다.
     annotationProcessor libs.refine.annotation.processor
+
+    // `implementation`은 런타임에 사용할 라이브러리를 추가합니다.
+    // `libs.refine.annotation`은 코드 작성 시 참조할 수 있는 애너테이션 관련 라이브러리를 가리키며,
+    // 특정 어너테이션을 사용할 수 있도록 제공합니다.
     implementation libs.refine.annotation
 
     implementation libs.hidden.compat

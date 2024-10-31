@@ -1,12 +1,14 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-        mavenLocal()
+        gradlePluginPortal() // Gradle의 기본 플러그인 저장소
+        google()             // 구글에서 제공하는 안드로이드 플러그인 및 라이브러리 저장소
+        mavenCentral()       // Maven 중앙 저장소로, 다양한 오픈소스 라이브러리가 제공
+        mavenLocal()         // 로컬 Maven 저장소, 테스트용이나 커스텀 라이브러리 빌드에 자주 사용
         maven {
+            // 특정 Rikka 라이브러리 사용을 위해 Sonatype 저장소를 추가
             url("https://s01.oss.sonatype.org/content/repositories/releases/")
             content {
+                // Rikka 관련 라이브러리만 포함하도록 그룹 지정
                 includeGroup("dev.rikka.tools.refine")
                 includeGroup("dev.rikka.tools.autoresconfig")
                 includeGroup("dev.rikka.tools.materialthemebuilder")
@@ -15,27 +17,28 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) // 모든 종속성이 이곳에서 선언되도록 강제
     repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        maven { url 'https://jitpack.io' }
+        google()          // Google 저장소, 안드로이드 관련 필수 라이브러리 제공
+        mavenCentral()    // Maven 중앙 저장소, 자주 사용되는 오픈소스 라이브러리 제공
+        mavenLocal()      // 로컬 Maven 저장소, 로컬 개발 환경에서 사용
+        maven { url 'https://jitpack.io' } // Jitpack 추가
         maven {
+            // Rikka 라이브러리 및 기타 특정 라이브러리를 위한 Sonatype 저장소 추가
             url("https://s01.oss.sonatype.org/content/repositories/releases/")
             content {
-                includeGroupByRegex("dev.rikka.*")
-                includeGroup("org.lsposed.hiddenapibypass")
+                includeGroupByRegex("dev.rikka.*")           // 모든 Rikka 라이브러리를 포함
+                includeGroup("org.lsposed.hiddenapibypass")  // LSPosed의 특정 API 우회 라이브러리 추가
             }
         }
     }
     versionCatalogs {
         libs {
-            version('hidden-api', '4.3.3')
+            version('hidden-api', '4.3.3')  // hidden-api 라이브러리 버전을 4.3.3으로 설정
             library('hidden-compat', 'dev.rikka.hidden', 'compat').versionRef('hidden-api')
             library('hidden-stub', 'dev.rikka.hidden', 'stub').versionRef('hidden-api')
 
-            version('refine', '4.3.0')
+            version('refine', '4.3.0')  // refine 라이브러리 버전을 4.3.0으로 설정
             library('refine-runtime', 'dev.rikka.tools.refine', 'runtime').versionRef('refine')
             library('refine-annotation', 'dev.rikka.tools.refine', 'annotation').versionRef('refine')
             library('refine-annotation-processor', 'dev.rikka.tools.refine', 'annotation-processor').versionRef('refine')
@@ -44,9 +47,9 @@ dependencyResolutionManagement {
     }
 }
 
-include ':server', ':starter', ':shell'
-include ':manager'
-include ':common'
+include ':server', ':starter', ':shell' // 추가 모듈 포함(shizuku)
+include ':manager'                      // 메인 앱 모듈 추가
+include ':common'                       // 추가 모듈 포함(shizuku)
 
 def root = "api"
 
@@ -63,6 +66,7 @@ if (propFile.canRead()) {
     }
 }
 
+//추가로 빌드할 모듈을 추가 **매우중요** AAB 빌드 시 모든 지정한 모듈이 함께 묶여 배포
 include ':aidl'
 project(':aidl').projectDir = file("$root${File.separator}aidl")
 
