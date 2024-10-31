@@ -54,6 +54,9 @@ public class RishConfig {
     }
 
     // AAB빌드일경우 아래 소스를 이용할것
+    // AAB빌드인경우 librish.so를 위 소스로 하면 찾지를 못한다.
+    // ABI별로 APK들을 전부 조회하여 librish.so파일을 복제해서 앱 내에 넣어줘야한다. 그리고 그 경로를 참고하게 해야한다.
+    // 그러므로 나는 Starter.kt소스 안에 initializeLibraries메소드와 extractSoFile메소드를 추가해주었다. 그곳에 복제한 경로를 로그로 확인할 수 있다.
 //    @SuppressLint("UnsafeDynamicallyLoadedCode")
 //    private static void loadLibrary() {
 //        if (libraryPath == null) {
